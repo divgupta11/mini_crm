@@ -36,8 +36,7 @@ Create `backend/.env`:
 ```env
 PORT=5000
 MONGO_URI=mongodb://127.0.0.1:27017/mini_crm
-JWT_SECRET=replace_with_a_long_random_secret
-JWT_EXPIRES_IN=7d
+JWT_SECRET=******************************
 CLIENT_URL=http://localhost:5173
 ```
 
@@ -46,8 +45,6 @@ Create `frontend/.env`:
 ```env
 VITE_API_URL=http://localhost:5000/api
 ```
-
-Examples are included in `backend/.env.example` and `frontend/.env.example`.
 
 ## Setup
 

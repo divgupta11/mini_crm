@@ -1,5 +1,5 @@
 import { LogOut, RefreshCw } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import api from "../api/axios.js";
 import LeadForm from "../components/LeadForm.jsx";
 import LeadTable from "../components/LeadTable.jsx";
@@ -16,6 +16,7 @@ const Dashboard = () => {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const formRef = useRef(null);
 
   const leadStats = useMemo(() => {
     return LEAD_STATUSES.map((status) => ({
@@ -50,10 +51,16 @@ const Dashboard = () => {
 
     try {
       if (editingLead) {
-        await api.put(`/leads/${editingLead._id}`, payload);
+        const { data } = await api.put(`/leads/${editingLead._id}`, payload);
+        setLeads((currentLeads) =>
+          currentLeads.map((lead) =>
+            lead._id === data.lead._id ? data.lead : lead
+          )
+        );
         setSuccess("Lead updated successfully");
       } else {
-        await api.post("/leads", payload);
+        const { data } = await api.post("/leads", payload);
+        setLeads((currentLeads) => [data.lead, ...currentLeads]);
         setSuccess("Lead created successfully");
       }
 
@@ -84,6 +91,13 @@ const Dashboard = () => {
     }
   };
 
+  const handleEditLead = (lead) => {
+    setError("");
+    setSuccess("");
+    setEditingLead(lead);
+    formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
   return (
     <main className="dashboard-shell">
       <header className="topbar">
@@ -108,12 +122,14 @@ const Dashboard = () => {
       </section>
 
       <section className="dashboard-grid">
-        <LeadForm
-          editingLead={editingLead}
-          loading={saving}
-          onCancelEdit={() => setEditingLead(null)}
-          onSubmit={handleSubmitLead}
-        />
+        <div className="lead-form-anchor" ref={formRef}>
+          <LeadForm
+            editingLead={editingLead}
+            loading={saving}
+            onCancelEdit={() => setEditingLead(null)}
+            onSubmit={handleSubmitLead}
+          />
+        </div>
 
         <div className="leads-panel">
           <div className="panel-toolbar">
@@ -152,7 +168,7 @@ const Dashboard = () => {
             <LeadTable
               leads={leads}
               onDelete={handleDeleteLead}
-              onEdit={setEditingLead}
+              onEdit={handleEditLead}
             />
           )}
         </div>

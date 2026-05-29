@@ -26,16 +26,16 @@ const LeadTable = ({ leads, onDelete, onEdit }) => {
         <tbody>
           {leads.map((lead) => (
             <tr key={lead._id}>
-              <td>{lead.name}</td>
-              <td>{lead.email}</td>
-              <td>{lead.phone}</td>
-              <td>
+              <td data-label="Name">{lead.name}</td>
+              <td data-label="Email">{lead.email}</td>
+              <td data-label="Phone">{lead.phone}</td>
+              <td data-label="Status">
                 <span className={`status-pill status-${lead.status.toLowerCase()}`}>
                   {lead.status}
                 </span>
               </td>
-              <td>{new Date(lead.createdAt).toLocaleDateString()}</td>
-              <td className="row-actions">
+              <td data-label="Created">{new Date(lead.createdAt).toLocaleDateString()}</td>
+              <td className="row-actions" data-label="Actions">
                 <button
                   className="icon-button"
                   type="button"

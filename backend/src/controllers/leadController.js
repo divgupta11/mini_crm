@@ -12,7 +12,7 @@ export const createLead = async (req, res, next) => {
     if (duplicateLead) {
       return res.status(409).json({ message: "Lead email already exists" });
     }
-
+// TODO: Add validation for required fields and valid email format
     const lead = await Lead.create({
       name,
       email,

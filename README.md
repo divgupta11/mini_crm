@@ -39,7 +39,6 @@ NODE_ENV=development
 MONGO_URI=mongodb://127.0.0.1:27017/mini_crm
 JWT_SECRET=******************************
 CLIENT_URL=http://localhost:5173
-CLIENT_URLS=http://localhost:5173
 ```
 
 Create `frontend/.env`:
@@ -47,34 +46,6 @@ Create `frontend/.env`:
 ```env
 VITE_API_URL=http://localhost:5000/api
 ```
-
-## Vercel Deployment
-
-This repo is configured for a single Vercel project:
-
-- Frontend: Vite static build from `frontend/`
-- Backend: Express API served through Vercel serverless functions from `api/`
-- API base path: `/api`
-
-The root `vercel.json` controls the deployment:
-
-| Setting | Value |
-| --- | --- |
-| Install Command | `npm ci --prefix backend && npm ci --prefix frontend` |
-| Build Command | `npm run build --prefix frontend` |
-| Output Directory | `frontend/dist` |
-
-Set these environment variables in Vercel:
-
-| Variable | Value |
-| --- | --- |
-| `MONGO_URI` | MongoDB Atlas connection string |
-| `JWT_SECRET` | Long random secret |
-| `CLIENT_URLS` | Optional. Your Vercel app URL, for example `https://mini-crm.vercel.app` |
-
-You do not need `VITE_API_URL` on Vercel because the frontend uses `/api` by default. For local development, keep `frontend/.env` set to `VITE_API_URL=http://localhost:5000/api`.
-
-Important: `mongodb://127.0.0.1:27017/mini_crm` works only on your laptop. Vercel cannot connect to your local MongoDB, so deployed builds need MongoDB Atlas or another hosted MongoDB URL. In MongoDB Atlas, allow network access for testing with `0.0.0.0/0`, then redeploy on Vercel.
 
 ## Setup
 
@@ -99,6 +70,28 @@ npm run install:all
 ```
 
 Make sure MongoDB is running locally, or replace `MONGO_URI` with your MongoDB Atlas connection string.
+
+## Frontend Deployment On Vercel
+
+This repo includes a root `vercel.json` for deploying only the frontend.
+
+Vercel settings:
+
+| Setting | Value |
+| --- | --- |
+| Framework Preset | Vite |
+| Root Directory | `./` |
+| Install Command | `npm install --prefix frontend` |
+| Build Command | `npm run build --prefix frontend` |
+| Output Directory | `frontend/dist` |
+
+Set this Vercel environment variable if your backend is deployed somewhere:
+
+```env
+VITE_API_URL=https://your-backend-url.com/api
+```
+
+If `VITE_API_URL` is not set, the frontend falls back to `http://localhost:5000/api`, which is only useful for local development.
 
 ## Run The App
 

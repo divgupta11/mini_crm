@@ -7,23 +7,9 @@ import notFound from "./middleware/notFound.js";
 
 const app = express();
 
-const configuredOrigins = process.env.CLIENT_URLS || process.env.CLIENT_URL;
-const allowAnyVercelOrigin = process.env.VERCEL === "1" && !configuredOrigins;
-const allowedOrigins = (configuredOrigins || "http://localhost:5173")
-  .split(",")
-  .map((origin) => origin.trim())
-  .filter(Boolean);
-
 app.use(
   cors({
-    origin(origin, callback) {
-      if (!origin || allowAnyVercelOrigin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-        return;
-      }
-
-      callback(new Error("Not allowed by CORS"));
-    },
+    origin: process.env.CLIENT_URL || "http://localhost:5173",
     credentials: true
   })
 );

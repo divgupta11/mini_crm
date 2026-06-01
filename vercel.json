@@ -1,18 +1,9 @@
 {
-  "installCommand": "npm install --prefix backend && npm install --prefix frontend",
+  "installCommand": "npm install --prefix frontend",
   "buildCommand": "npm run build --prefix frontend",
   "outputDirectory": "frontend/dist",
   "framework": "vite",
-  "functions": {
-    "api/**/*.js": {
-      "maxDuration": 10
-    }
-  },
   "rewrites": [
-    {
-      "source": "/api/(.*)",
-      "destination": "/api/[...path].js"
-    },
     {
       "source": "/(.*)",
       "destination": "/index.html"

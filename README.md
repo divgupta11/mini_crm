@@ -73,17 +73,17 @@ Make sure MongoDB is running locally, or replace `MONGO_URI` with your MongoDB A
 
 ## Frontend Deployment On Vercel
 
-This repo includes a root `vercel.json` for deploying only the frontend.
+The `frontend/` folder includes a `vercel.json` for deploying only the frontend.
 
 Vercel settings:
 
 | Setting | Value |
 | --- | --- |
 | Framework Preset | Vite |
-| Root Directory | `./` |
-| Install Command | `npm install --prefix frontend` |
-| Build Command | `npm run build --prefix frontend` |
-| Output Directory | `frontend/dist` |
+| Root Directory | `frontend` |
+| Install Command | `npm install` |
+| Build Command | `npm run build` |
+| Output Directory | `dist` |
 
 Set this Vercel environment variable if your backend is deployed somewhere:
 

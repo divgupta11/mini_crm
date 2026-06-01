@@ -4,10 +4,6 @@ const API_BASE_URL =
   import.meta.env.VITE_API_URL ||
   (import.meta.env.DEV ? "http://localhost:5000/api" : undefined);
 
-if (!API_BASE_URL) {
-  throw new Error("Missing VITE_API_URL. Set it to your deployed backend API URL.");
-}
-
 const api = axios.create({
   baseURL: API_BASE_URL
 });

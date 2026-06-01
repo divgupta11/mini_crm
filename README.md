@@ -88,10 +88,10 @@ Vercel settings:
 Set this Vercel environment variable if your backend is deployed somewhere:
 
 ```env
-VITE_API_URL=https://your-backend-url.com/api
+VITE_API_URL=https://your-backend-name.onrender.com/api
 ```
 
-If `VITE_API_URL` is not set, the frontend falls back to `http://localhost:5000/api`, which is only useful for local development.
+If `VITE_API_URL` is not set, the frontend falls back to `http://localhost:5000/api` only while running Vite locally. Production builds must set `VITE_API_URL`, otherwise the app will fail fast instead of calling a user's local machine.
 
 ## Backend Deployment On Vercel
 
@@ -111,7 +111,7 @@ Set these Vercel environment variables on the backend project:
 ```env
 MONGO_URI=mongodb+srv://username:password@cluster.mongodb.net/mini_crm
 JWT_SECRET=your-long-random-secret
-CLIENT_URLS=https://your-frontend-project.vercel.app,http://localhost:5173
+CLIENT_URLS=https://mini-crm-eight-sepia.vercel.app,http://localhost:5173
 ```
 
 Important: `mongodb://127.0.0.1:27017/mini_crm` works only on your laptop. A Vercel backend cannot connect to your local MongoDB because `localhost` on Vercel means Vercel's own serverless environment, not your computer. For a deployed backend, use MongoDB Atlas or another hosted MongoDB service.
@@ -119,7 +119,7 @@ Important: `mongodb://127.0.0.1:27017/mini_crm` works only on your laptop. A Ver
 After the backend is deployed, copy its Vercel URL and set this on the frontend Vercel project:
 
 ```env
-VITE_API_URL=https://your-backend-project.vercel.app/api
+VITE_API_URL=https://your-backend-name.onrender.com/api
 ```
 
 ## Run The App

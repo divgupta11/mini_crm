@@ -7,7 +7,11 @@ import notFound from "./middleware/notFound.js";
 
 const app = express();
 
-const allowedOrigins = (process.env.CLIENT_URLS || process.env.CLIENT_URL || "http://localhost:5173")
+const allowedOrigins = (
+  process.env.CLIENT_URLS ||
+  process.env.CLIENT_URL ||
+  "http://localhost:5173,https://mini-crm-eight-sepia.vercel.app"
+)
   .split(",")
   .map((origin) => origin.trim())
   .filter(Boolean);

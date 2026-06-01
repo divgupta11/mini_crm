@@ -104,7 +104,7 @@ Create a second Vercel project for the backend with these settings:
 | Root Directory | `backend` |
 | Install Command | `npm install` |
 | Build Command | `echo "No backend build step"` |
-| Output Directory | empty |
+| Output Directory | `public` |
 
 Set these Vercel environment variables on the backend project:
 

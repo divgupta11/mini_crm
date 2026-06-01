@@ -1,6 +1,7 @@
 {
   "installCommand": "npm install",
   "buildCommand": "echo \"No backend build step\"",
+  "outputDirectory": "public",
   "framework": null,
   "functions": {
     "api/**/*.js": {

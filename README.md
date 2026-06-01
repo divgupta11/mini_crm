@@ -93,6 +93,35 @@ VITE_API_URL=https://your-backend-url.com/api
 
 If `VITE_API_URL` is not set, the frontend falls back to `http://localhost:5000/api`, which is only useful for local development.
 
+## Backend Deployment On Vercel
+
+The `backend/` folder includes a `vercel.json` for deploying only the backend API.
+
+Create a second Vercel project for the backend with these settings:
+
+| Setting | Value |
+| --- | --- |
+| Root Directory | `backend` |
+| Install Command | `npm install` |
+| Build Command | `echo "No backend build step"` |
+| Output Directory | empty |
+
+Set these Vercel environment variables on the backend project:
+
+```env
+MONGO_URI=mongodb+srv://username:password@cluster.mongodb.net/mini_crm
+JWT_SECRET=your-long-random-secret
+CLIENT_URLS=https://your-frontend-project.vercel.app,http://localhost:5173
+```
+
+Important: `mongodb://127.0.0.1:27017/mini_crm` works only on your laptop. A Vercel backend cannot connect to your local MongoDB because `localhost` on Vercel means Vercel's own serverless environment, not your computer. For a deployed backend, use MongoDB Atlas or another hosted MongoDB service.
+
+After the backend is deployed, copy its Vercel URL and set this on the frontend Vercel project:
+
+```env
+VITE_API_URL=https://your-backend-project.vercel.app/api
+```
+
 ## Run The App
 
 Start the backend:

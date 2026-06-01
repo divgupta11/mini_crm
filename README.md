@@ -67,10 +67,18 @@ Set the prompted Render environment variables:
 | Service | Variable | Value |
 | --- | --- | --- |
 | Backend | `MONGO_URI` | MongoDB Atlas connection string |
+| Backend | `JWT_SECRET` | Long random secret, or use Render's generated value in the Blueprint |
 | Backend | `CLIENT_URLS` | Render frontend URL, for example `https://mini-crm-frontend.onrender.com` |
 | Frontend | `VITE_API_URL` | Render backend API URL with `/api`, for example `https://mini-crm-backend.onrender.com/api` |
 
-`JWT_SECRET` is generated automatically by Render. The backend health check is available at `/api/health`, and the frontend has a SPA rewrite so React Router routes load directly.
+`JWT_SECRET` is generated automatically when deploying with the included Blueprint. The backend health check is available at `/api/health`, and the frontend has a SPA rewrite so React Router routes load directly.
+
+If the backend deploy builds successfully and then exits while running `npm start`, check these first:
+
+- `MONGO_URI` must be set on the backend service, not the frontend service.
+- MongoDB Atlas must allow Render to connect. In Atlas, add `0.0.0.0/0` under Network Access while testing, or use a stricter allowlist once you know your deployment path.
+- `JWT_SECRET` must be set on the backend service.
+- `CLIENT_URLS` should contain the deployed frontend origin without `/api`, for example `https://mini-crm-frontend.onrender.com`.
 
 ## Setup
 

@@ -5,8 +5,12 @@ const connectDB = async () => {
 
   if (!mongoUri) {
     throw new Error(
-      "MONGO_URI is not set. Add a MongoDB Atlas connection string in Render > Environment."
+      "MONGO_URI is not set. Add a MongoDB Atlas connection string in your deployment environment variables."
     );
+  }
+
+  if (mongoose.connection.readyState === 1) {
+    return mongoose.connection;
   }
 
   const connection = await mongoose.connect(mongoUri, {

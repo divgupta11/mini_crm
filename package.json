@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "description": "Full-stack Mini CRM with React, Express, MongoDB, and JWT auth",
+  "type": "module",
   "scripts": {
     "install:all": "npm install --prefix backend && npm install --prefix frontend",
     "dev:backend": "npm run dev --prefix backend",

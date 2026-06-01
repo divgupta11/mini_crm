@@ -48,37 +48,33 @@ Create `frontend/.env`:
 VITE_API_URL=http://localhost:5000/api
 ```
 
-## Render Deployment
+## Vercel Deployment
 
-This repo includes a root `render.yaml` Blueprint that provisions both services:
+This repo is configured for a single Vercel project:
 
-- `mini-crm-backend`: Node web service from `backend/`
-- `mini-crm-frontend`: static Vite site from `frontend/`
+- Frontend: Vite static build from `frontend/`
+- Backend: Express API served through Vercel serverless functions from `api/`
+- API base path: `/api`
 
-Use Render's Blueprint flow and point it at this repository. Render will run these commands:
+The root `vercel.json` controls the deployment:
 
-| Service | Build Command | Start/Publish |
-| --- | --- | --- |
-| Backend | `npm ci` | `npm start` |
-| Frontend | `npm ci && npm run build` | publish `dist` |
+| Setting | Value |
+| --- | --- |
+| Install Command | `npm ci --prefix backend && npm ci --prefix frontend` |
+| Build Command | `npm run build --prefix frontend` |
+| Output Directory | `frontend/dist` |
 
-Set the prompted Render environment variables:
+Set these environment variables in Vercel:
 
-| Service | Variable | Value |
-| --- | --- | --- |
-| Backend | `MONGO_URI` | MongoDB Atlas connection string |
-| Backend | `JWT_SECRET` | Long random secret, or use Render's generated value in the Blueprint |
-| Backend | `CLIENT_URLS` | Render frontend URL, for example `https://mini-crm-frontend.onrender.com` |
-| Frontend | `VITE_API_URL` | Render backend API URL with `/api`, for example `https://mini-crm-backend.onrender.com/api` |
+| Variable | Value |
+| --- | --- |
+| `MONGO_URI` | MongoDB Atlas connection string |
+| `JWT_SECRET` | Long random secret |
+| `CLIENT_URLS` | Optional. Your Vercel app URL, for example `https://mini-crm.vercel.app` |
 
-`JWT_SECRET` is generated automatically when deploying with the included Blueprint. The backend health check is available at `/api/health`, and the frontend has a SPA rewrite so React Router routes load directly.
+You do not need `VITE_API_URL` on Vercel because the frontend uses `/api` by default. For local development, keep `frontend/.env` set to `VITE_API_URL=http://localhost:5000/api`.
 
-If the backend deploy builds successfully and then exits while running `npm start`, check these first:
-
-- `MONGO_URI` must be set on the backend service, not the frontend service.
-- MongoDB Atlas must allow Render to connect. In Atlas, add `0.0.0.0/0` under Network Access while testing, or use a stricter allowlist once you know your deployment path.
-- `JWT_SECRET` must be set on the backend service.
-- `CLIENT_URLS` should contain the deployed frontend origin without `/api`, for example `https://mini-crm-frontend.onrender.com`.
+Important: `mongodb://127.0.0.1:27017/mini_crm` works only on your laptop. Vercel cannot connect to your local MongoDB, so deployed builds need MongoDB Atlas or another hosted MongoDB URL. In MongoDB Atlas, allow network access for testing with `0.0.0.0/0`, then redeploy on Vercel.
 
 ## Setup
 

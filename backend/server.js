@@ -11,7 +11,7 @@ const validateEnvironment = () => {
     throw new Error(
       `Missing required environment variable(s): ${missing.join(
         ", "
-      )}. Add them in Render > Environment and redeploy.`
+      )}. Add them in your deployment environment variables and redeploy.`
     );
   }
 };
@@ -26,7 +26,7 @@ const startServer = async () => {
   } catch (error) {
     console.error("Failed to start server:", error.message);
     console.error(
-      "Render setup checklist: set MONGO_URI to your MongoDB Atlas URI, set JWT_SECRET, and allow Render access in MongoDB Atlas Network Access."
+      "Deployment setup checklist: set MONGO_URI to your MongoDB Atlas URI, set JWT_SECRET, and allow deployment access in MongoDB Atlas Network Access."
     );
     process.exit(1);
   }

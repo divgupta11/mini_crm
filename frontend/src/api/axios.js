@@ -2,7 +2,7 @@ import axios from "axios";
 
 const API_BASE_URL =
   import.meta.env.VITE_API_URL ||
-  (import.meta.env.DEV ? "http://localhost:5000/api" : undefined);
+  (import.meta.env.DEV ? "https://mini-crm-3-hn0w.onrender.com/api" : undefined);
 
 const api = axios.create({
   baseURL: API_BASE_URL

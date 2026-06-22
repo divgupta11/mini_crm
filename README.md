@@ -191,3 +191,5 @@ All lead routes require an `Authorization: Bearer <token>` header.
 - Leads are scoped to the authenticated user through `createdBy`.
 - Duplicate lead emails are prevented per user.
 - API validation uses `express-validator`.
+
+- Live URL - https://mini-crm-five-kappa.vercel.app/login
